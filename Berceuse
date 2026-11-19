@@ -1,0 +1,11 @@
+import music
+from microbit import *
+
+
+music.play(music.FUNK)
+music.play(music.PYTHON, wait=False)
+music.set_tempo(bpm=120)
+
+
+set_volume(100)
+speaker.off()
