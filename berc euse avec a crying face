@@ -1,0 +1,13 @@
+import music
+from microbit import *
+
+set_volume(100)
+music.play(music.FUNK)
+music.play(music.PYTHON, wait=False)
+music.set_tempo(bpm=120)
+speaker.off()
+display.show(Image('00000:'
+                   '99099:'
+                   '50005:'
+                   '29992:'
+                   '90009'))
