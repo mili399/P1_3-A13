@@ -1,0 +1,16 @@
+# Imports go at the top
+from microbit import *
+import music
+while True:
+    son = microphone.sound_level()
+    if son > 200:
+        set_volume(200)
+        audio.play(Sound.SAD)
+        display.scroll('crying')
+        for i in range(5):
+            display.show(baby_cry)
+            sleep(500)
+            display.show(baby_straight)
+            sleep(500)
+        display.clear()
+    
