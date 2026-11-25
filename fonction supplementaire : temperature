@@ -1,0 +1,8 @@
+from microbit import *
+
+while True:
+    if temperature() == 20:
+        display.scroll("safe")
+    elif temperature() < 16:
+        display.scroll("go check on your kid")
+    break     
