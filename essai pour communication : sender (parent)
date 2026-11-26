@@ -1,0 +1,94 @@
+from microbit import *
+import radio
+radio.on()
+radio.config(group=13)
+
+n = 0
+
+display.show(Image(
+    "90009:"
+    "90009:"
+    "90009:"
+    "90009:"
+    "99999"
+))
+
+while True:
+
+    if button_a.was_pressed():
+
+        n += 1
+
+        if n == 1:
+            display.show(Image(
+                "90009:"
+                "90009:"
+                "90009:"
+                "99999:"
+                "99999"
+            ))
+
+        elif n == 2:
+            display.show(Image(
+                "90009:"
+                "90009:"
+                "99999:"
+                "99999:"
+                "99999"
+            ))
+
+        elif n == 3:
+            display.show(Image(
+                "90009:"
+                "99999:"
+                "99999:"
+                "99999:"
+                "99999"
+            ))
+
+        elif n == 4:
+            display.show(Image(
+                "99999:"
+                "99999:"
+                "99999:"
+                "99999:"
+                "99999"
+            ))
+            sleep(100)
+            display.clear()
+
+    if n == 4:
+        display.show(Image(
+            "99999:"
+            "99999:"
+            "99999:"
+            "99999:"
+            "99999"
+        ))
+        sleep(200)
+        display.clear()
+
+    sleep(220)
+    if n == 4:
+        display.show(Image(
+            "99999:"
+            "99999:"
+            "99999:"
+            "99999:"
+            "99999"
+        ))
+        sleep(200)
+        display.show(Image(
+            "99999:"
+            "99999:"
+            "99999:"
+            "99999:"
+            "99999"
+        ))
+        sleep(200)
+        display.clear()
+        display.scroll("full", delay=50)
+        break
+    radio.send("full")        
+        
+
