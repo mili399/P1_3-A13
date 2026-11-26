@@ -1,0 +1,18 @@
+def connexion():
+    password = 'A13'
+    display.scroll('Press A to connect', wait=False)
+    while True:
+        while not button_a.was_pressed():
+            sleep(50)
+        display.clear()
+        challenge = random.randint(10000, 99999)
+        radio.send(str(challenge))
+        display.show("E")
+        answer = str(hashing(calculate_challenge_response(challenge, password)))
+        sleep(500)
+        reponse = str(radio.receive())
+        chargement()
+        if reponse == answer:
+            music.play(music.POWER_UP)
+            bonjour()
+            return password + answer
