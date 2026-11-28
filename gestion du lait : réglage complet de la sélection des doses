@@ -1,0 +1,120 @@
+from microbit import *
+
+zero = Image("09990:"
+             "09090:"
+             "09090:"
+             "09090:"
+             "09990")
+
+un = Image("00900:"
+           "09900:"
+           "00900:"
+           "00900:"
+           "09990")
+
+deux = Image("09990:"
+             "09090:"
+             "00090:"
+             "00900:"
+             "09990")
+
+trois = Image("09990:"
+              "00090:"
+              "09990:"
+              "00090:"
+              "09990")
+
+quatre = Image("09090:"
+               "09090:"
+               "09990:"
+               "00090:"
+               "00090")
+
+cinq = Image("09990:"
+             "09000:"
+             "09990:"
+             "00090:"
+             "09990")
+
+six = Image("09990:"
+            "09000:"
+            "09990:"
+            "09090:"
+            "09990")
+
+sept = Image("09990:"
+             "09090:"
+             "00090:"
+             "00090:"
+             "00090")
+
+huit = Image("09990:"
+             "09090:"
+             "09990:"
+             "09090:"
+             "09990")
+
+neuf = Image("09990:"
+             "09090:"
+             "09990:"
+             "00090:"
+             "09990")
+
+dix = Image("90999:"
+            "90909:"
+            "90909:"
+            "90909:"
+            "90999")
+
+onze = Image("09090:"
+             "09090:"
+             "09090:"
+             "09090:"
+             "09090")
+
+douze = Image("90999:"
+              "90909:"
+              "90090:"
+              "90900:"
+              "90999")
+
+Biberon = Image("90009:"  #image de biberon qui servira de contenant pour remplir les doses
+                "90009:"  #cette image est utilisée après avoir confirmé le nombre de dose
+                "90009:"
+                "90009:"
+                "99999")
+
+all_numbers = [zero, un, deux, trois, quatre, cinq, six, sept, huit, neuf, dix, onze, douze]
+objectif = 1
+doses = 0
+etat = "REGLAGE"  #on est dans la partie REGLAGE du MENU pour sélectionner les doses que le bébé consomme dans la journée
+
+while True:
+    if etat == "REGLAGE":
+        if button_a.was_pressed() and objectif < 12: #max 12 car c'est le nombre maximum de doses
+            objectif += 1 
+        if button_b.was_pressed() and objectif > 1: #min 1 car c'est minimum 1 dose par jour 
+            objectif -= 1
+        display.show(all_numbers[objectif])
+        
+        if pin_logo.is_touched(): #durant le réglage des doses, on appuie sur logo pour confirmer la dose choisie 
+            display.scroll("OK?") #demande de confirmation au parents avant d'enregistrer le nombre de doses sélectionné
+            button_a.was_pressed()
+            button_b.was_pressed() #on enlève a et b de la mémoire pour éviter une erreur de comptage de dose 
+            etat = "CONFIRMATION"
+            
+    elif etat == "CONFIRMATION":
+        display.show(all_numbers[objectif])
+        if button_a.was_pressed():
+            display.show(Image.YES) #une fois la dose choisie, le parent confirme en appuyant sur A et une image d'un V apparait
+            sleep(1000)
+            if doses == 0: #si le nombre de dose du biberon est à zéro, le texte "EMPTY" s'affiche
+                display.scroll("EMPTY")
+                button_a.was_pressed()
+                button_b.was_pressed() #on enlève a et b de la mémoire pour éviter une erreur de comptage de dose
+            etat = "REMPLISSAGE"
+        if button_b.was_pressed(): #si le parents appuie sur b, alors il retourne au réglage pour resélectionner la dose
+            etat = "REGLAGE"
+
+    elif etat == "REMPLISSAGE":
+        display.show(Biberon)
